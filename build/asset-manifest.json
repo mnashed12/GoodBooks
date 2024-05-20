@@ -1,0 +1,10 @@
+{
+  "files": {
+    "main.js": "/goodbooks/static/js/main.6a2e7078.js",
+    "index.html": "/goodbooks/index.html",
+    "main.6a2e7078.js.map": "/goodbooks/static/js/main.6a2e7078.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.6a2e7078.js"
+  ]
+}
