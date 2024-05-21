@@ -1,57 +1,35 @@
-// src/components/Home.js
 import React, { useState, useEffect } from 'react';
-import { auth, firestore } from '../firebase';
+import { Link } from 'react-router-dom';
+import { firestore } from '../firebase';
+import Button from '@mui/material/Button';
 
 const Home = ({ user }) => {
   const [books, setBooks] = useState([]);
-  const [newBook, setNewBook] = useState('');
-  const [rating, setRating] = useState('');
 
   useEffect(() => {
-    const fetchBooks = async () => {
-      const booksCollection = await firestore.collection('books').get();
-      setBooks(booksCollection.docs.map(doc => ({ id: doc.id, ...doc.data() })));
-    };
-    fetchBooks();
-  }, []);
-
-  const handleAddBook = async () => {
-    if (newBook.trim() && rating.trim()) {
-      const bookRef = await firestore.collection('books').add({
-        title: newBook,
-        rating: rating,
-        user: user.email
-      });
-      setBooks([...books, { id: bookRef.id, title: newBook, rating: rating, user: user.email }]);
-      setNewBook('');
-      setRating('');
+    if (user) {
+      const fetchBooks = async () => {
+        const booksCollection = await firestore.collection('books').get();
+        setBooks(booksCollection.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+      };
+      fetchBooks();
     }
-  };
+  }, [user]);
 
   return (
     <div>
-      <h2>Welcome, {user.email}</h2>
-      <input
-        type="text"
-        value={newBook}
-        onChange={(e) => setNewBook(e.target.value)}
-        placeholder="Book Title"
-      />
-      <input
-        type="text"
-        value={rating}
-        onChange={(e) => setRating(e.target.value)}
-        placeholder="Rating"
-      />
-      <button onClick={handleAddBook}>Add Book</button>
-      <h3>Book Ratings</h3>
-      <ul>
-        {books.map((book) => (
-          <li key={book.id}>
-            {book.title} - {book.rating} (by {book.user})
-          </li>
-        ))}
-      </ul>
+      <h2>Welcome, {user ? user.email : 'Guest'}</h2>
+      <p>Welcome to GoodBooks, a social network for book lovers! Connect with other readers, discover new books, and share your thoughts and recommendations.</p>
+      
+      {/* Render signup and login buttons if user is not signed in */}
+      {!user && (
+        <div>
+          <Button color="primary" component={Link} to="/signup">Sign Up</Button>
+          <Button color="primary" component={Link} to="/">Login</Button>
+        </div>
+      )}
+
+      {/* Render other content for the home page */}
     </div>
   );
 };
