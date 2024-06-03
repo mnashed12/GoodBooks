@@ -1,6 +1,6 @@
 // src/components/AddBook.js
 import React, { useState } from 'react';
-import { firestore } from '../firebase';
+import { addBookToFirestore } from '../firebase';
 import { TextField, Button, Container, Typography } from '@mui/material';
 
 function AddBook({ user }) {
@@ -11,12 +11,7 @@ function AddBook({ user }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await firestore.collection('books').add({
-        title,
-        author,
-        rating: parseInt(rating),
-        userId: user.uid,
-      });
+      await addBookToFirestore(title, author, rating, user.uid);
       setTitle('');
       setAuthor('');
       setRating('');

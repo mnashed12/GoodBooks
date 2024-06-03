@@ -9,10 +9,8 @@ function SignUp() {
 
   const handleSignUp = async () => {
     try {
-      // Create user account with email and password
       const userCredential = await auth.createUserWithEmailAndPassword(email, password);
 
-      // Add user data to Firestore
       await addUserToFirestore(userCredential.user.uid, { email, username });
     } catch (error) {
       console.error(error);
@@ -21,7 +19,6 @@ function SignUp() {
 
   const addUserToFirestore = async (userId, userData) => {
     try {
-      // Add user data to Firestore
       await firestore.collection('users').doc(userId).set(userData);
       console.log('User added to Firestore successfully');
     } catch (error) {

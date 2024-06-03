@@ -1,0 +1,34 @@
+.best-sellers-container {
+    width: 15%; 
+    margin: 20px auto;
+  }
+  
+  .carousel {
+    max-width: 10%;
+    margin-left: 200px !important;
+  }
+
+.nyt-best-sellers {
+    text-align: left;
+    margin-left: 227px !important;
+    margin-top: 50px;
+  }
+  
+  .carousel .book-image {
+    max-width: 100%;
+    height: auto; 
+  }
+  
+  .carousel .carousel-slider .control-dots {
+    display: none;
+  }
+
+  .recently-uploaded-book {
+    margin-bottom: 10px;
+  }
+  
+  .book-info {
+    font-size: 16px;
+    color: #333;
+  }
+  

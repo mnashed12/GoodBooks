@@ -15,10 +15,8 @@ import Logout from './components/Logout';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { styled } from '@mui/system';
 
-// Define a custom theme
 const theme = createTheme();
 
-// Styled component
 const MainContainer = styled('div')({
   flexGrow: 1,
   textAlign: 'center',

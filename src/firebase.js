@@ -2,6 +2,7 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import 'firebase/firestore';
+import { getFirestore, collection, addDoc } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: "AIzaSyC5EWplrJZ-lmaXO1VY7h8aQ_QWpnUf5u0",
@@ -17,5 +18,24 @@ const firebaseApp = firebase.initializeApp(firebaseConfig);
 const auth = firebaseApp.auth();
 const firestore = firebaseApp.firestore();
 
-export { auth, firestore, firebaseApp };
+const addBookToFirestore = async (title, author, rating, userId, setBooks) => {
+  try {
+    await firestore.collection('books').add({
+      title,
+      author,
+      rating,
+      userId,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp() // Set timestamp to current server time
+    });
+    console.log('Book added successfully!');
+
+    const booksCollection = await firestore.collection('books').get();
+    setBooks(booksCollection.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+  } catch (error) {
+    console.error('Error adding book:', error);
+  }
+};
+
+
+export { auth, firestore, firebaseApp, addBookToFirestore };
 export default firebase;
